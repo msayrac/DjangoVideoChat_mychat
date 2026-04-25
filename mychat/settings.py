@@ -123,7 +123,7 @@ STATICFILES_DIRS = [
 ]
 
 
-# 21 de kaldım git hata veriyor onu hallet css de claısmadı aqua background
+
 
 
 
