@@ -1,9 +1,38 @@
 
 const APP_ID = 'b7f67d03d0ce449e9970fc8e97cb6074'
-
 const CHANNEL = 'main'
-const TOKEN = '007eJxTYAhuKK0MspDatyvE0mfPxJq5Prd9VS/bp0Rv0W57L/6xTF+BIck8zcw8xcA4xSA51cTEMtXS0twgLdki1dI8OcnMwNyE8fPbzIZARoYnk06xMjJAIIjPwpCbmJnHwAAADpAfgg=='
+const TOKEN = '007eJxTYLCs4tDyjGtbKbrKqFrV53ioJ9dZ74h38hZtuxlZNgXULFZgSDJPMzNPMTBOMUhONTGxTLW0NDdIS7ZItTRPTjIzMDeRd3uf2RDIyPBmEQMjIwMEgvgsDLmJmXkMDAAjvRvb'
+
+let UID;
+
+// console.log('Stream.js conntected')
+
+const client = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'});
+// const client = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'});
+
+let localTracks = []
+let remoteUsers = {}
+
+let joinAndDisplayLocalStream = async () => {
+    UID = await client.join(APP_ID, CHANNEL, TOKEN, null)
+
+    localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
+
+    let player = `<div class="video-container" id="user-container-${UID}">
+                    <div class="username-wrapper"><span class="user-name">My Name</span></div>
+                    <div class="video-player" id="user-${UID}"></div>
+                  </div>`
+    document.getElementById('video-streams').insertAdjacentHTML('beforeend',player)
 
 
-console.log('Stream.js conntected')
+    localTracks[1].play(`user-${UID}`)
+
+    await client.publish([localTracks[0], localTracks[1]])
+
+
+}
+
+joinAndDisplayLocalStream()
+
+
 
