@@ -48,4 +48,9 @@ body {
     position: relative;
 }
 
+.video-player {
+    height: 75%;
+    width:50%;
+}
+
 
