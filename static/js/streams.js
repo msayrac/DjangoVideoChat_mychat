@@ -14,6 +14,7 @@ let remoteUsers = {}
 
 let joinAndDisplayLocalStream = async () => {
     client.on('user-published', handleUserJoined)
+    client.on('user-left', handleUserLeft)
 
     UID = await client.join(APP_ID, CHANNEL, TOKEN, null)
 
@@ -54,8 +55,26 @@ let handleUserJoined = async (user, mediaType) => {
     }
 }
 
+let handleUserLeft =  async (user) =>{
+    delete remoteUsers[user.uid]
+    document.getElementById(`user-container-${user.uid}`).remove()
+}
+
+let leaveAndRemoveLocalStream = async () => {
+    for (let i=0; localTracks.length>i; i++){
+        localTracks[i].stop()
+        localTracks[i].close()
+    }
+    await client.leave()
+    window.open('/','_self')
+}
+
+
+handleUserLeft()
 handleUserJoined()
 joinAndDisplayLocalStream()
+
+document.getElementById('leave-btn').addEventListener('click',leaveAndRemoveLocalStream)
 
 
 

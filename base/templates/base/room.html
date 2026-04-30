@@ -7,13 +7,25 @@
             <p>Room Name: <span id="room-name"></span></p>
         </section>
 
-        <section id="video-streams">
+        <section id="video-streams"></section>
 
-            <!-- <div class="video-container" id="user-container-1">
-                <div class="username-wrapper"><span class="user-name">My Name</span></div>
-                <div class="video-player" id="user-1"></div>
-            </div> -->
-            
+        <section id="controls-wrapper">
+
+            <div class="icon-wrapper">
+                <img class="control-icon" id="mic-btn" src="{% static 'images/microphone.svg' %}" alt="">
+            </div>
+
+            <div class="icon-wrapper">
+                <img class="control-icon" id="camera-btn" src="{% static 'images/video.svg' %}" alt="">
+            </div>
+
+            <div class="icon-wrapper">
+                <!-- <a href="{% url 'lobby' %}"><img class="control-icon" id="leave-btn" src="{% static 'images/leave.svg' %}" alt=""></a> -->
+
+                <img class="control-icon" id="leave-btn" src="{% static 'images/leave.svg' %}" alt="">
+               
+            </div>
+
         </section>
 
     </main>
