@@ -1,22 +1,29 @@
 const APP_ID = 'b7f67d03d0ce449e9970fc8e97cb6074'
-const CHANNEL = 'main'
-const TOKEN = '007eJxTYLjw4syme4fPXU6cOM3WS8fJuPpzR4Ja8cqoT0c4fJkdNv9WYEgyTzMzTzEwTjFITjUxsUy1tDQ3SEu2SLU0T04yMzA3WRz6KbMhkJHh/a4mZkYGCATxWRhyEzPzGBgABUMiAw=='
-
-let UID;
-
-// console.log('Stream.js conntected')
+const CHANNEL = sessionStorage.getItem('room')
+const TOKEN = sessionStorage.getItem('token')
+let UID =Number(sessionStorage.getItem('UID'));
 
 const client = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'});
-// const client = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'});
 
 let localTracks = []
 let remoteUsers = {}
 
+
+
+
 let joinAndDisplayLocalStream = async () => {
+    document.getElementById('room-name').innerText = CHANNEL
+
     client.on('user-published', handleUserJoined)
     client.on('user-left', handleUserLeft)
 
-    UID = await client.join(APP_ID, CHANNEL, TOKEN, null)
+    try{
+        console.log('Kullanıcı Verileri:', {APP_ID, CHANNEL, TOKEN, UID})
+        await client.join(APP_ID, CHANNEL, TOKEN, UID)
+    } catch(error) {
+        console.error("HATA BURADA : ", error)
+        // window.open('/', '_self')
+    }    
 
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
 
@@ -70,11 +77,32 @@ let leaveAndRemoveLocalStream = async () => {
 }
 
 
-handleUserLeft()
-handleUserJoined()
+let toggleCamera = async (e) => {
+    if(localTracks[1].muted){
+        await localTracks[1].setMuted(false)
+        e.target.style.backgroundColor = '#fff'
+    }else{
+        await localTracks[1].setMuted(true)
+        e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
+    }
+}
+
+let toggleMic = async (e)=> {
+    if(localTracks[0].muted){
+        await localTracks[0].setMuted(false)
+        e.target.style.backgroundColor = '#fff'
+    }else{
+         await localTracks[0].setMuted(true)
+        e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
+    }
+}
+
+
 joinAndDisplayLocalStream()
 
 document.getElementById('leave-btn').addEventListener('click',leaveAndRemoveLocalStream)
+document.getElementById('camera-btn').addEventListener('click',toggleCamera)
+document.getElementById('mic-btn').addEventListener('click',toggleMic)
 
 
 
