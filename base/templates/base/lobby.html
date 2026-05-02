@@ -5,14 +5,19 @@
 <main>
     <section id="form-container">
         <img id="logo" src="{% static 'images/chat-icon.png' %}" alt="">
-        <div>
-        <h1>Welcome to MyChat</h1>
-        <p>A group video calling application just for you!</p>
-    </div>
+        
+        <div id="welcome-message">
+            <h1>Welcome to MyChat</h1>
+            <p>A group video calling application just for you!</p>
+        </div>
 
     <form action="" id="form">
         <div class="form-field">
             <input type="text" name="room" placeholder="Enter a room name..." style="text-transform: uppercase;"/>
+        </div>
+
+        <div class="form-field">
+            <input type="text" name="username" placeholder="Enter your name..." style="text-transform: uppercase;"/>
         </div>
 
         <div class="form-field">
