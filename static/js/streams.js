@@ -3,12 +3,12 @@ const CHANNEL = sessionStorage.getItem('room')
 const TOKEN = sessionStorage.getItem('token')
 let UID =Number(sessionStorage.getItem('UID'));
 
+let NAME = sessionStorage.getItem('name')
+
 const client = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'});
 
 let localTracks = []
 let remoteUsers = {}
-
-
 
 
 let joinAndDisplayLocalStream = async () => {
@@ -16,6 +16,8 @@ let joinAndDisplayLocalStream = async () => {
 
     client.on('user-published', handleUserJoined)
     client.on('user-left', handleUserLeft)
+
+    
 
     try{
         console.log('Kullanıcı Verileri:', {APP_ID, CHANNEL, TOKEN, UID})
