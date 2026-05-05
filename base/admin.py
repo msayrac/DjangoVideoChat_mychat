@@ -4,6 +4,14 @@ from .models import *
 # Register your models here.
 
 
-admin.site.register(RoomMember)
+class RoomMemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'room_name', 'uid')
+
+    list_filter = ('room_name','name')
+
+    search_fields = ('name', 'room_name')
+
+
+admin.site.register(RoomMember,RoomMemberAdmin)
 
 

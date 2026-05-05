@@ -8,7 +8,8 @@ class RoomMember(models.Model):
     room_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.name
+        # return self.name
+        return f"{self.name} (Room: {self.room_name})"
     
     
 
